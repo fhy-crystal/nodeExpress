@@ -5,25 +5,56 @@
 	<title>Node Express</title>
 </head>
 <body>
-	<form action="http://localhost:8081/formsubmit" method="GET" enctype="text/plain">
-		First Name: <input type="text" name="first_name">
+	<section>
+		<h2>FORM表单格式</h2>
+		<form action="http://localhost:8081/formsubmit" method="GET" enctype="text/plain">
+			First Name: <input type="text" name="first_name">
+			<br>
+			Last Name: <input type="text" name="last_name">
+			<br>
+			Submit: <input type="submit" value="Submit">
+		</form>
 		<br>
-		Last Name: <input type="text" name="last_name">
-		<br>
-		Submit: <input type="submit" value="Submit">
-	</form>
-	<button id="submit">发送</button>
+		<button id="jsSubmit">js发送</button>
+	</section>
+
+	<section>
+		<h2>POST</h2>
+		<button id="submit">jQuery发送</button>
+	</section>
+
 	<script src="http://apps.bdimg.com/libs/jquery/1.6.4/jquery.min.js"></script>
 	<script>
+		var jsSubmitBtn = document.getElementById('jsSubmit');
+		jsSubmitBtn.onclick = function() {
+			var postBody = {
+				value: 1
+			};
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4) {
+					if (xhr.status >= 200 && xhr.status < 300 || xhr.status == 304) {
+						console.log(xhr.responseText);
+					} else {
+						console.log('unsuccessful:' + xhr.status);
+					}
+				}
+			};
+			xhr.open('get', "http://localhost:8081/formsubmit?first_name=hongyan&last_name=fang", true);
+			// xhr.setRequestHeader('Content-Type', 'application/x-www-form-urllencoded');
+			xhr.send(null);
+		}
+
 		$(document).ready(function() {
+			// 点击jQuery发送
 			$('#submit').click(function() {
 				var postBody = {
 					value: 1
 				};
 				httpMethod('http://localhost:8081/postTest', 'post', postBody).then(function(data) {
-					console.log(data);
+					console.log('jQuery', data);
 				}, function(data) {
-					console.log(data);
+					console.log('jQuery', data);
 				})
 				
 			});

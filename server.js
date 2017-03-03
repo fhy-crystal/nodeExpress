@@ -17,6 +17,7 @@ app.all('*', function(req, res, next) {
 });
 
 app.get('/formsubmit', function(req, res) {
+	// req.query 获取表单形式传递的参数
 	var response = {
 		firstName: req.query.first_name,
 		lastName: req.query.last_name
@@ -26,6 +27,7 @@ app.get('/formsubmit', function(req, res) {
 })
 
 app.post('/postTest', function(req, res){
+	// req.body 获取json格式传递的参数
 	console.log(req.body);
 	var resBody = {
 		getValue: req.body.value

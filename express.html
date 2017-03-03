@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Node Express</title>
+</head>
+<body>
+	<form action="http://localhost:8081/formsubmit" method="GET" enctype="text/plain">
+		First Name: <input type="text" name="first_name">
+		<br>
+		Last Name: <input type="text" name="last_name">
+		<br>
+		Submit: <input type="submit" value="Submit">
+	</form>
+	<button id="submit">发送</button>
+	<script src="http://apps.bdimg.com/libs/jquery/1.6.4/jquery.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$('#submit').click(function() {
+				var postBody = {
+					value: 1
+				};
+				httpMethod('http://localhost:8081/postTest', 'post', postBody).then(function(data) {
+					console.log(data);
+				}, function(data) {
+					console.log(data);
+				})
+				
+			});
+
+			function httpMethod(url, method, dataObj) {
+				var defer = $.Deferred();
+				$.ajax({
+					url: url,
+					type: method,
+					dataType: 'json',
+					data: JSON.stringify(dataObj), // important
+					contentType:'application/json; charset=utf-8', // important
+					success : function(data){
+						defer.resolve(data);//执行状态从"未完成"改为"已完成"
+					},
+					error : function(data){
+						defer.reject(data);
+					}
+				})
+				return defer.promise();
+			}
+		});
+	</script>
+</body>
+</html>

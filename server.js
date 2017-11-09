@@ -23,16 +23,17 @@ app.get('/formsubmit', function(req, res) {
 		lastName: req.query.last_name
 	};
 	console.log(response);
-	res.end(JSON.stringify(response));
+	res.send(JSON.stringify(response));
 })
 
 app.post('/postTest', function(req, res){
 	// req.body 获取json格式传递的参数
 	console.log(req.body);
 	var resBody = {
-		getValue: req.body.value
+		status: 0
 	};
-	res.end(JSON.stringify(resBody));
+	res.json(resBody)
+	// res.send(JSON.stringify(resBody));
 })
 
 //监听8081接口打印请求域名和端口

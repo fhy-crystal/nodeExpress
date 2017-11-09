@@ -6,22 +6,25 @@
 </head>
 <body>
 	<section>
-		<h2>FORM表单格式</h2>
-		<form action="http://localhost:8081/formsubmit" method="GET" enctype="text/plain">
-			First Name: <input type="text" name="first_name">
-			<br>
-			Last Name: <input type="text" name="last_name">
-			<br>
-			Submit: <input type="submit" value="Submit">
-		</form>
-		<br>
-		<button id="jsSubmit">js发送</button>
-	</section>
-
-	<section>
-		<h2>POST</h2>
-		<button id="submit">jQuery发送</button>
-	</section>
+        <h2>FORM表单格式</h2>
+        <form action="http://localhost:8081/formsubmit" method="GET" enctype="text/plain">
+            First Name: <input type="text" name="first_name">
+            <br>
+            Last Name: <input type="text" name="last_name">
+            <br>
+            Submit: <input type="submit" value="Submit">
+        </form>
+        <br>
+        <h2>JS原生方法</h2>
+        <button id="jsSubmit">js发送</button>
+    </section>
+    <!-- jqeury -->
+    <section>
+        <h2>POST</h2>
+        <button id="submit">jQuery发送</button>
+        <h2>jQuery POST</h2>
+        <button id="jqPost">发送</button>
+    </section>
 
 	<script src="http://apps.bdimg.com/libs/jquery/1.6.4/jquery.min.js"></script>
 	<script>
@@ -76,6 +79,28 @@
 				})
 				return defer.promise();
 			}
+
+			$('#jqPost').click(function() {
+				var postBody = {
+					'mobile': '13755448866',
+					'code': '123456'
+				};
+				$.ajax({
+					url: 'http://localhost:8081/postTest',
+					type: 'POST',
+					dataType: 'JSON',
+					contentType: "application/json; charset=utf-8",
+					data: JSON.stringify(postBody)
+				})
+				.done(function(data) {
+					console.log(data);
+					console.log("success");
+				})
+				.fail(function(data) {
+					console.log('请重试');
+				})	
+				
+			});
 		});
 	</script>
 </body>
